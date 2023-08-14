@@ -1,8 +1,8 @@
 export interface LinkMetadata {
-  url: string;
+  link: string;
   title: string;
-  description?: string;
+  desc?: string;
   host?: string;
   favicon?: string;
-  image?: string;
+  logo?: string;
 }

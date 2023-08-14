@@ -37,19 +37,19 @@ export class CodeBlockProcessor {
       );
     }
 
-    if (!yaml || !yaml.url || !yaml.title) {
+    if (!yaml || !yaml.link || !yaml.title) {
       throw new NoRequiredParamsError(
-        "required params[url, title] are not found."
+        "required params[link, title] are not found."
       );
     }
 
     return {
-      url: yaml.url,
+      link: yaml.link,
       title: yaml.title,
-      description: yaml.description,
+      desc: yaml.desc,
       host: yaml.host,
       favicon: yaml.favicon,
-      image: yaml.image,
+      logo: yaml.logo,
     };
   }
 
@@ -70,7 +70,7 @@ export class CodeBlockProcessor {
 
     const cardEl = document.createElement("a");
     cardEl.addClass("auto-card-link-card");
-    cardEl.setAttr("href", data.url);
+    cardEl.setAttr("href", data.link);
     containerEl.appendChild(cardEl);
 
     const mainEl = document.createElement("div");
@@ -84,8 +84,8 @@ export class CodeBlockProcessor {
 
     const descriptionEl = document.createElement("div");
     descriptionEl.addClass("auto-card-link-description");
-    if (data.description) {
-      descriptionEl.textContent = data.description;
+    if (data.desc) {
+      descriptionEl.textContent = data.desc;
     }
     mainEl.appendChild(descriptionEl);
 
@@ -117,8 +117,8 @@ export class CodeBlockProcessor {
 
     const thumbnailImgEl = document.createElement("img");
     thumbnailImgEl.addClass("auto-card-link-thumbnail-img");
-    if (data.image) {
-      thumbnailImgEl.setAttr("src", data.image);
+    if (data.logo) {
+      thumbnailImgEl.setAttr("src", data.logo);
     }
     thumbnailImgEl.setAttr("alt", "");
     thumbnailEl.appendChild(thumbnailImgEl);

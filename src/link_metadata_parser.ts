@@ -1,11 +1,11 @@
 import { LinkMetadata } from "src/interfaces";
 
 export class LinkMetadataParser {
-  url: string;
+  link: string;
   htmlDoc: Document;
 
-  constructor(url: string, htmlText: string) {
-    this.url = url;
+  constructor(link: string, htmlText: string) {
+    this.link = link;
 
     const parser = new DOMParser();
     const htmlDoc = parser.parseFromString(htmlText, "text/html");
@@ -23,17 +23,17 @@ export class LinkMetadataParser {
       ?.replace(/\r\n|\n|\r/g, "")
       .replace(/"/g, '\\"')
       .trim();
-    const { hostname } = new URL(this.url);
+    const { hostname } = new URL(this.link);
     const favicon = this.getFavicon();
     const image = this.getImage();
 
     return {
-      url: this.url,
+      link: this.link,
       title: title,
-      description: description,
+      desc: description,
       host: hostname,
       favicon: favicon,
-      image: image,
+      logo: image,
     };
   }
 

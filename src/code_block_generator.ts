@@ -47,15 +47,18 @@ export class CodeBlockGenerator {
   }
 
   genCodeBlock(linkMetadata: LinkMetadata): string {
-    const codeBlockTexts = ["\n```cardlink"];
-    codeBlockTexts.push(`url: ${linkMetadata.url}`);
+    const codeBlockTexts = ["\n```card"];
+    codeBlockTexts.push(`link: ${linkMetadata.link}`);
     codeBlockTexts.push(`title: "${linkMetadata.title}"`);
-    if (linkMetadata.description)
-      codeBlockTexts.push(`description: "${linkMetadata.description}"`);
+    if (linkMetadata.desc) codeBlockTexts.push(`desc: "${linkMetadata.desc}"`);
     if (linkMetadata.host) codeBlockTexts.push(`host: ${linkMetadata.host}`);
     if (linkMetadata.favicon)
       codeBlockTexts.push(`favicon: ${linkMetadata.favicon}`);
-    if (linkMetadata.image) codeBlockTexts.push(`image: ${linkMetadata.image}`);
+    if (linkMetadata.logo) codeBlockTexts.push(`logo: ${linkMetadata.logo}`);
+    else
+      codeBlockTexts.push(
+        `logo: https://sync.jdysya.top/d/public/icon/note.svg`
+      );
     codeBlockTexts.push("```\n");
     return codeBlockTexts.join("\n");
   }
