@@ -1,4 +1,4 @@
-import { App, parseYaml } from "obsidian";
+import { App, MarkdownView, Notice, parseYaml } from "obsidian";
 
 import { YamlParseError, NoRequiredParamsError } from "src/errors";
 import { LinkMetadata } from "src/interfaces";
@@ -49,7 +49,7 @@ export class CodeBlockProcessor {
       desc: yaml.desc,
       host: yaml.host,
       favicon: yaml.favicon,
-      logo: yaml.logo,
+      logo: yaml.logo
     };
   }
 
@@ -72,6 +72,25 @@ export class CodeBlockProcessor {
     cardEl.addClass("auto-card-link-card");
     cardEl.setAttr("href", data.link);
     containerEl.appendChild(cardEl);
+    // 添加点击事件监听器
+    cardEl.addEventListener("click", (event) => {
+      // 支持的视频文件后缀列表（可以根据需要扩展）
+      const videoExtensions = ["mp4", "avi", "mov", "mkv", "webm"];
+      // 获取 URL 的后缀
+      const urlParts = new URL(data.link).pathname.split(".");
+      const fileExtension = urlParts[urlParts.length - 1].toLowerCase(); // 转换为小写以进行比较
+      if (videoExtensions.includes(fileExtension)) {
+        event.preventDefault(); // 阻止默认的超链接行为
+        // 在点击超链接时显示通知
+        const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+        if (view?.getMode() === "source") {
+          const notice = new Notice("请在阅读模式下点击");
+          setTimeout(() => {
+            notice.hide();
+          }, 3000); // 3秒后隐藏通知
+        }
+      }
+    });
 
     const mainEl = document.createElement("div");
     mainEl.addClass("auto-card-link-main");
